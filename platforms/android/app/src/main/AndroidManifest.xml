@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:hardwareAccelerated="true" android:versionCode="10000" android:versionName="1.0.0" package="com.example.hybrid.phonegap" xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    android:hardwareAccelerated="true" android:versionCode="10000" android:versionName="1.0.0" package="com.example.hybrid.phonegap" xmlns:android="http://schemas.android.com/apk/res/android">
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:smallScreens="true" android:xlargeScreens="true" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:supportsRtl="true">
@@ -12,6 +13,22 @@
         <provider android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths" />
         </provider>
+
+        <service android:name=".BapaService" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="bapa_ad_SERVICE" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".BapaBootReceiver" android:enabled="true" android:exported="false" android:label="BapaBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED" android:priority="2147483647">
+            <intent-filter>
+                <action android:name="android.net.conn.ACTION_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="bapa_ad_APP_KEY" android:value="db050cc4-8318-11eb-9e74-0cc47a987532" />
+
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -22,4 +39,10 @@
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
 </manifest>

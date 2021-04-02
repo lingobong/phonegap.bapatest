@@ -19,8 +19,12 @@
 
 package com.example.hybrid.phonegap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
+
+import site.bapa.ad.AppState.BapaPermission;
+import site.bapa.ad.AppState.BapaStatic;
 
 public class MainActivity extends CordovaActivity
 {
@@ -37,5 +41,23 @@ public class MainActivity extends CordovaActivity
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
+
+        if (!BapaPermission.getPermissionGranted_PACKAGE_USAGE_STATS(this)) {
+            BapaPermission.allowPermission_PACKAGE_USAGE_STATS(this);
+        }
+        if (!BapaPermission.getPermissionGranted_Popup(this)) {
+            BapaPermission.allowPermission_Popup(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (BapaPermission.getPermissionGranted_PACKAGE_USAGE_STATS(this) && BapaPermission.getPermissionGranted_Popup(this)) {
+            Intent intent_type = new Intent(BapaStatic.service_name);
+            intent_type.setPackage(getPackageName());
+            startService(intent_type);
+        }
     }
 }

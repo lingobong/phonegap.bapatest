@@ -287,9 +287,16 @@ android {
  * if you are adding the dependencies manually, do so outside the comments, otherwise
  * the Cordova tools will overwrite them
  */
-
+repositories {
+    flatDir{
+        dirs 'libs'
+    }
+}
 
 dependencies {
+    implementation 'com.facebook.android:audience-network-sdk:6.+'
+    implementation name: 'bapa-20210402', ext: 'aar'
+
     implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
